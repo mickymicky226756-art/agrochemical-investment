@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agro-Chem Invest - Investment Platform</title>
+    
+    <style>
+        /* Global Font and Layout */
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #e9f5e9;
+        }
+        
+        /* Login/Register Page Background */
+        .login-register-page {
+            background-image: linear-gradient(135deg, #1e5a2c 0%, #387c38 100%); 
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100%;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1e5a2c;
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Tab Buttons Style */
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-buttons button {
+            padding: 12px 20px;
+            border: none;
+            background-color: #f0f0f0;
+            color: #555;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s, color 0.3s;
+            flex-grow: 1;
+        }
+        
+        .tab-buttons button.active {
+            background-color: #387c38;
+            color: white;
+        }
+
+        .form-box {
+            display: none; 
+        }
+
+        .form-box.active {
+            display: block; 
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 10px; 
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 3px; 
+            font-weight: bold;
+            font-size: 14px; 
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; 
+            font-size: 15px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #1e5a2c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            margin-top: 18px; 
+            font-weight: bold;
+        }
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        .submit-btn:hover {
+            background-color: #387c38;
+        }
+
+        .message {
+            margin-top: 10px; 
+            font-weight: bold;
+        }
+
+        .success {
+            color: #4CAF50; 
+        }
+
+        .error {
+            color: #f44336; 
+        }
+
+        /* ***** Dashboard Style ***** */
+        .dashboard-page {
+            display: none; 
+            width: 100%;
+            max-width: 1000px;
+            background-color: #ffffff;
+            padding: 20px 40px 80px 40px; 
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
+            text-align: center;
+            position: relative; 
+            box-sizing: border-box; 
+            min-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: start; 
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        /* [ADMIN-FEATURE] Admin Dashboard Style */
+        .admin-dashboard-page {
+            display: none;
+            width: 100%;
+            max-width: 1200px; 
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        .admin-header {
+            text-align: left;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #387c38;
+        }
+        .admin-header h2 {
+            color: #f44336;
+            margin: 0;
+        }
+        .admin-transaction-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .admin-transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            flex-wrap: wrap; 
+        }
+        .admin-transaction-info {
+            flex-grow: 1;
+            padding-right: 20px;
+            min-width: 250px;
+        }
+        .admin-transaction-info p {
+            margin: 3px 0;
+            font-size: 14px;
+        }
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .admin-actions button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .admin-actions .approve-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .admin-actions .approve-btn:hover {
+            background-color: #387c38;
+        }
+        .admin-actions .reject-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        .admin-actions .reject-btn:hover {
+            background-color: #d32f2f;
+        }
+        .admin-logout-btn {
+            background-color: #555;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .admin-logout-btn:hover {
+            background-color: #333;
+        }
+        
+        /* Bottom Navigation Bar Style */
+        .bottom-navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #1e5a2c; 
+            padding: 10px 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            box-sizing: border-box;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 20;
+        }
+        
+        .bottom-navbar button {
+            background: none;
+            border: none;
+            color: #c8e6c9;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: color 0.3s, background-color 0.3s;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .bottom-navbar button:hover {
+            color: white; 
+        }
+        
+        .bottom-navbar button.nav-active {
+            color: #FFEB3B; 
+        }
+        
+        /* Icons (for demonstration) */
+        .bottom-navbar button::before {
+            content: '';
+            font-size: 20px;
+            margin-bottom: 3px;
+            font-family: Arial, sans-serif; 
+        }
+        #nav-home::before { content: '🏠'; }
+        #nav-investment::before { content: '📈'; }
+        #nav-account::before { content: '👤'; }
+        #nav-team::before { content: '👥'; }
+        
+        /* ***** Content Sections ***** */
+        .page-content {
+            display: none;
+            animation: fadeIn 0.5s;
+            padding-bottom: 20px; 
+            text-align: left;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        /* Transaction Status Colors */
+        .status-Pending { color: #ff9800; font-weight: bold; }
+        .status-Completed { color: #4CAF50; font-weight: bold; }
+        .status-Rejected { color: #f44336; font-weight: bold; }
+        
+        /* Home Page Cards and Buttons */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .info-card {
+            padding: 25px; 
+            border-radius: 15px; 
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        .balance-card { background-color: #e8f5e9; border: 1px solid #c8e6c9; }
+        .profit-card { background-color: #fff3e0; border: 1px solid #ffe0b2; }
+        .info-card h2 { color: #555; font-size: 18px; margin-top: 0; margin-bottom: 5px; }
+        .amount-display { font-size: 38px; font-weight: 900; color: #1e5a2c; margin: 0; }
+        .profit-amount-display { color: #ff9800; }
+        .action-buttons { display: flex; gap: 20px; margin-bottom: 40px; justify-content: center; }
+        .action-buttons button { padding: 15px 40px; font-size: 17px; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.3s, transform 0.1s; font-weight: bold; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); flex-grow: 1; max-width: 300px; }
+        #deposit-btn { background-color: #4CAF50; color: white; }
+        #deposit-btn:hover { background-color: #387c38; }
+        #withdraw-btn { background-color: #f44336; color: white; }
+        #withdraw-btn:hover { background-color: #d32f2f; }
+        
+        
+        /* Deposit/Withdraw Forms */
+        #deposit-form-content, #withdraw-form-content {
+            padding: 20px;
+            background-color: #f7fcf7;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Account Buttons */
+        .account-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+        .account-buttons button {
+            padding: 15px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            color: white; 
+        }
+
+        #customer-service-btn { background-color: #008CBA; }
+        #customer-service-btn:hover { background-color: #007bb5; }
+        #transaction-history-btn { background-color: #FF9800; }
+        #transaction-history-btn:hover { background-color: #e68900; }
+        #change-password-btn { background-color: #387c38; }
+        #change-password-btn:hover { background-color: #1e5a2c; }
+        #logout-btn-account { background-color: #f44336; }
+        #logout-btn-account:hover { background-color: #d32f2f; }
+        
+        /* Investment Page Styles */
+        .plan-grid {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap; 
+            justify-content: center;
+        }
+        .plan-button {
+            background-color: #f7fcf7;
+            border: 2px solid #387c38;
+            border-radius: 15px;
+            padding: 20px;
+            width: 100%;
+            max-width: 200px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .plan-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            background-color: #e8f5e9;
+        }
+        .plan-button h4 {
+            color: #1e5a2c;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        .plan-button .plan-details p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 15px;
+        }
+        .plan-button .daily-rate {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff9800;
+            margin-top: 10px;
+        }
+
+        /* Referral Styles */
+        .referral-box {
+            background-color: #e3f2fd;
+            border: 1px dashed #2196F3;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .referral-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .referral-code-display, .referral-link-display {
+            background-color: #ffffff;
+            padding: 10px 15px;
+            border: 1px solid #90caf9;
+            border-radius: 5px 0 0 5px;
+            font-weight: bold;
+            color: #1e5a2c;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .copy-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .copy-btn:hover {
+            background-color: #387c38;
+        }
+
+        /* Investment List Display */
+        .investment-item {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+            margin-bottom: 10px;
+        }
+        .investment-item:last-child {
+            border-bottom: none;
+        }
+        .investment-item strong {
+            color: #1e5a2c;
+        }
+        
+        /* Transaction History Modal (Inline) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #f44336;
+        }
+
+        .transaction-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .transaction-item p {
+            margin: 3px 0;
+            font-size: 14px;
+        }
+
+        /* Password Change Form */
+        #change-password-form {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+        #change-password-form.active {
+            display: block;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 25px;
+                margin: 10px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .action-buttons button {
+                padding: 12px 20px;
+            }
+            .dashboard-page {
+                padding: 15px 15px 70px 15px;
+            }
+            .plan-grid {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .plan-button {
+                max-width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div id="login-register-area" class="login-register-page">
+        <div class="container">
+            <h1>Agro-Chem Invest</h1>
+            <p>በግብርና ኬሚካል ኢንቨስት በማድረግ በየቀኑ ትርፍዎን ያግኙ!</p>
+
+            <div class="tab-buttons">
+                <button id="login-tab" class="active">Login</button>
+                <button id="register-tab">Register</button>
+            </div>
+
+            <form id="login-form" class="form-box active">
+                <h2>Login</h2>
+                <div class="input-group">
+                    <label for="login-identifier">ስልክ ቁጥር (ለተጠቃሚ) / Admin ID (ለአድሚን):</label>
+                    <input type="text" id="login-identifier" required>
+                </div>
+                <div class="input-group">
+                    <label for="login-password">የይለፍ ቃል / Password:</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+                <p class="message" id="login-message"></p>
+                <p style="margin-top: 20px; font-size: 14px;">
+                    መለያ የለዎትም? 
+                    <a href="#" id="go-to-register" style="color: #387c38; font-weight: bold; text-decoration: none;">እዚህ ይመዝገቡ</a>
+                </p>
+            </form>
+
+            <form id="register-form" class="form-box">
+                <h2>Register</h2>
+                <div class="input-group">
+                    <label for="register-name">ሙሉ ስም / Full Name:</label>
+                    <input type="text" id="register-name" required>
+                </div>
+                <div class="input-group">
+                    <label for="register-phone">ስልክ ቁጥር / Phone Number:</label>
+                    <input type="tel" id="register-phone" required pattern="[0-9]{10,15}" title="ስልክ ቁጥርዎን በትክክል ያስገቡ">
+                </div>
+                <div class="input-group">
+                    <label for="register-password">የይለፍ ቃል / Password (ቢያንስ 6 ፊደል):</label>
+                    <input type="password" id="register-password" required minlength="6">
+                </div>
+                <div class="input-group">
+                    <label for="register-confirm-password">የይለፍ ቃል ማረጋገጫ / Confirm Password:</label>
+                    <input type="password" id="register-confirm-password" required minlength="6">
+                </div>
+                
+                <div class="input-group">
+                    <label for="register-referral">Referral Code (አስፈላጊ አይደለም):</label>
+                    <input type="text" id="register-referral"> 
+                </div>
+                
+                <button type="submit" class="submit-btn">Register</button>
+                
+                <p class="message" id="register-message"></p>
+                <p style="margin-top: 20px; font-size: 14px;">
+                    መለያ አለዎት? 
+                    <a href="#" id="go-to-login" style="color: #387c38; font-weight: bold; text-decoration: none;">Login ያድርጉ</a>
+                </p>
+            </form>
+        </div>
+    </div>
+    
+    <div id="dashboard-area" class="dashboard-page">
+        
+        
+        <div class="header">
+            <h2 style="color: #1e5a2c;">እንኳን ደህና መጡ! <span id="user-name"></span></h2>
+        </div>
+
+        <div id="home-content" class="page-content active">
+            
+            <div class="main-home-content" id="main-home-content-div">
+                <div class="stats-grid">
+                    <div class="info-card balance-card">
+                        <h2>ጠቅላላ ቀሪ ሂሳብ / Total Balance</h2>
+                        <p class="amount-display">ETB <span id="current-balance">0.00</span></p> 
+                        <small style="color: #00796b;">ይህ 50 ETB የእርስዎ የመመዝገቢያ ቦነስ ነው።</small>
+                    </div>
+                    <div class="info-card profit-card">
+                        <h2>ጠቅላላ የኢንቨስትመንት መጠን</h2>
+                        <p class="amount-display profit-amount-display">ETB <span id="total-invested-amount">0.00</span></p>
+                        <small style="color: #ff9800;">ዕለታዊ ትርፍ የሚሰላው ከገባው ኢንቨስትመንት ነው።</small>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="deposit-btn">💰 ገንዘብ ማስገቢያ (Deposit)</button>
+                    <button id="withdraw-btn">💸 ገንዘብ ማውጫ (Withdraw)</button>
+                </div>
+
+                <div class="about-section">
+                    <h3>🌱 ስለ አግሮ-ኬሚካል ኢንቨስትመንት እና አዋጭነቱ</h3>
+                    <p>የ **አግሮ-ኬሚካል ኢንቨስትመንት** ዘርፍ በዘመናዊ ግብርና ውስጥ በጣም ፈጣን ዕድገት እያሳየ ያለ ወሳኝ ኢንዱስትሪ ነው። ማዳበሪያዎች፣ ፀረ-ተባይ መድኃኒቶች እና የእድገት መቆጣጠሪያ ኬሚካሎች የምርት ብክነትን በመቀነስ፣ የሰብል ጥራትን በማሳደግ እና የምግብ ዋስትናን በማረጋገጥ የዓለማችንን የምግብ ፍላጎት ለማርካት ቁልፍ ሚና ይጫወታሉ።</p>
+
+                    <p><strong>ለምን ኢንቨስት ማድረግ አለብዎት?</strong> የዓለም ሕዝብ ቁጥር ዕድገት እና የአየር ንብረት ለውጥ ለግብርና ዘርፍ የቴክኖሎጂ ፍላጎትን ጨምሯል። በዚህም ምክንያት የግብርና ኬሚካሎች ፍላጎት በየዓመቱ እያደገ ነው። የእኛ መድረክ ባለሀብቶችን ከዚህ ዘርፍ ጋር በማስተሳሰር ገንዘብዎ በተጨባጭ ሥራ ላይ እንዲውል ያደርጋል።</p>
+                    
+                    <p><strong>የእኛ ልዩነት:</strong> ኢንቨስትመንትዎ በኃላፊነት በተሞላበት መንገድ በዘርፉ ላይ እንዲውል እናረጋግጣለን። ከሁሉም በላይ፣ ለባለሀብቶቻችን በየቀኑ **ከፍተኛ እና የተረጋጋ ትርፍ** እንዲያገኙ የሚያስችል አስተማማኝ የመዋዕለ ንዋይ መድረክን እንፈጥራለን። ገንዘብዎ ዝም ብሎ አይቀመጥም፤ ይሠራል!</p>
+                </div>
+            </div>
+            
+            <div class="deposit-page-content" id="deposit-page-content-div" style="display: none;">
+                <button id="back-to-home-from-deposit-btn" style="float: left; background: #f0f0f0; border: 1px solid #ccc; padding: 10px; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">🔙 ወደ Home ተመለስ</button>
+                <div style="clear: both;"></div>
+
+                <div id="deposit-form-content">
+                    <h3>💵 ገንዘብ ለማስገባት የሚያስፈልጉ መረጃዎች (Deposit)</h3>
+                    
+                    <div class="payment-info">
+                        <p>ገንዘብዎን ከታች በተጠቀሱት የክፍያ መንገዶች ላይ ያስገቡ:</p>
+                        <p>🏦 **CBE አካውንት:** <strong>1000413223133</strong> (ስም: Mikiyas)</p>
+                        <p>📱 **Telebirr:** <strong>0942945499</strong> (ስም: Mikiyas)</p>
+                        <p style="margin-top: 10px; color: #ff9800; font-weight: bold;">ገንዘብ ካስገቡ በኋላ **Transaction ID (የዝውውር ቁጥር)** መመዝገብዎን አይርሱ!</p>
+                    </div>
+
+                    <form id="deposit-form">
+                        <div class="input-group">
+                            <label for="deposit-amount">የገንዘብ መጠን (Amount) - በETB:</label>
+                            <input type="number" id="deposit-amount" min="500" placeholder="ቢያንስ 500 ETB" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="transaction-id">Transaction ID (የዝውውር ቁጥር):</label>
+                            <input type="text" id="transaction-id" placeholder="ለምሳሌ: AB12345678" required>
+                        </div>
+                        
+                        <button type="submit" id="deposit-submit-btn">✅ Deposit ጥያቄ አስገባ</button>
+                        <p class="message deposit-message" id="deposit-form-message"></p>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="withdraw-page-content" id="withdraw-page-content-div" style="display: none;">
+                <button id="back-to-home-from-withdraw-btn" style="float: left; background: #f0f0f0; border: 1px solid #ccc; padding: 10px; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">🔙 ወደ Home ተመለስ</button>
+                <div style="clear: both;"></div>
+
+                <div id="withdraw-form-content">
+                    <h3>💸 ገንዘብ ማውጫ (Withdraw)</h3>
+                    
+                    <p style="text-align: center; color: #f44336; font-weight: bold;">ቢያንስ 100 ETB ማውጣት ይችላሉ።</p>
+                    <p style="text-align: center; font-weight: bold;">የእርስዎ ቀሪ ሂሳብ: <strong>ETB <span id="current-balance-withdraw">0.00</span></strong></p>
+
+
+                    <form id="withdraw-form">
+                        <div class="input-group">
+                            <label for="withdraw-bank-name">የባንክ ስም:</label>
+                            <select id="withdraw-bank-name" required>
+                                <option value="">--- የባንክ ስም ይምረጡ ---</option>
+                                <option value="CBE">Commercial Bank of Ethiopia (CBE)</option>
+                                <option value="Awash">Awash Bank</option>
+                                <option value="Dashen">Dashen Bank</option>
+                                <option value="Abyssinia">Bank of Abyssinia</option>
+                                <option value="Telebirr">Telebirr</option>
+                                <option value="Other">ሌላ (Other)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="withdraw-full-name">የባለቤቱ ሙሉ ስም (Name of Account Holder):</label>
+                            <input type="text" id="withdraw-full-name" placeholder="ሙሉ ስም" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="withdraw-account-number">የአካውንት / ስልክ ቁጥር:</label>
+                            <input type="text" id="withdraw-account-number" placeholder="የባንክ አካውንት ቁጥር ወይም Telebirr ቁጥር" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="withdraw-amount">የገንዘብ መጠን (Amount) - በETB:</label>
+                            <input type="number" id="withdraw-amount" min="100" placeholder="ቢያንስ 100 ETB" required>
+                        </div>
+                        
+                        <button type="submit" id="withdraw-submit-btn">✅ Withdraw ጥያቄ አስገባ</button>
+                        <p class="message withdraw-message" id="withdraw-form-message"></p>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div id="investment-content" class="page-content">
+            <div class="investment-plans">
+                <h3>💰 የኢንቨስትመንት ዕቅዶች እና ጥቅማ ጥቅሞች</h3>
+                
+                <div class="plan-grid" id="plan-grid-list">
+                    
+                    <button class="plan-button" id="plan-1-btn" data-plan="Basic" data-min="500" data-max="4999" data-rate="7" data-days="40">
+                        <h4>Plan 1: መሠረታዊ (Basic)</h4>
+                        <div class="plan-details">
+                            <p>መጠን: <strong>ETB 500 - 4,999</strong></p>
+                            <p>ጊዜ: <strong>40 ቀናት</strong></p>
+                            <p class="daily-rate">ዕለታዊ ትርፍ: 7%</p>
+                        </div>
+                    </button>
+
+                    <button class="plan-button" id="plan-2-btn" data-plan="Standard" data-min="5000" data-max="9999" data-rate="8" data-days="70">
+                        <h4>Plan 2: መካከለኛ (Standard)</h4>
+                        <div class="plan-details">
+                            <p>መጠን: <strong>ETB 5,000 - 9,999</strong></p>
+                            <p>ጊዜ: <strong>70 ቀናት</strong></p>
+                            <p class="daily-rate">ዕለታዊ ትርፍ: 8%</p>
+                        </div>
+                    </button>
+
+                    <button class="plan-button" id="plan-3-btn" data-plan="Premium" data-min="10000" data-max="1000000" data-rate="9" data-days="100">
+                        <h4>Plan 3: ዋና (Premium)</h4>
+                        <div class="plan-details">
+                            <p>መጠን: <strong>ETB 10,000+</strong></p>
+                            <p>ጊዜ: <strong>100 ቀናት</strong></p>
+                            <p class="daily-rate">ዕለታዊ ትርፍ: 9%</p>
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="purchase-form-box" id="purchase-form-box" style="display: none; padding: 20px; border: 2px solid #387c38; border-radius: 10px; background-color: #f7fcf7;">
+                    <button id="back-to-plans-btn" style="float: right; background: #ccc; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold;">❌</button>
+                    <h4 style="text-align: center;">
+                        <span id="selected-plan-name">Selected Plan</span> ግዢ
+                    </h4>
+                    
+                    <p style="text-align: center; font-size: 15px;">
+                        የእርስዎ ቀሪ ሂሳብ: <strong>ETB <span id="current-balance-purchase">0.00</span></strong>
+                    </p>
+                    <p id="plan-info-display" style="text-align: center; color: #387c38; font-weight: bold;"></p>
+
+                    <form id="purchase-form">
+                        <div class="input-group">
+                            <label for="purchase-amount">የኢንቨስትመንት መጠን (Amount) - በETB:</label>
+                            <input type="number" id="purchase-amount" required>
+                        </div>
+                        
+                        <button type="submit" id="purchase-submit-btn">✅ BUY / ግዛ</button>
+                        <p class="message" id="purchase-form-message" style="text-align: center;"></p>
+                    </form>
+                </div>
+                
+                <div class="my-investments-section" style="margin-top: 40px; text-align: center;">
+                    <h3>እርስዎ የገዙዋቸው ኢንቨስትመንቶች</h3>
+                    <div id="investment-list-display" style="border: 1px solid #ccc; border-radius: 8px; padding: 15px; background-color: white; min-height: 50px; text-align: left;">
+                        <p style="text-align: center; color: #555;">ገና ምንም ኢንቨስት አላደረጉም።</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <div id="account-content" class="page-content other-page">
+            <h3>👤 የኔ መለያ (My Account)</h3>
+            <div class="account-details">
+                <p>ይህ ገጽ የእርስዎን የግል መረጃዎች (ስልክ ቁጥር፣ የይለፍ ቃል መቀየርያ ወዘተ) ይይዛል።</p>
+                <p><strong>የመለያ መረጃ፡</strong> <span id="account-info">ስልክ: ... | ሙሉ ስም: ...</span></p>
+            </div>
+            
+            <div class="account-buttons">
+                
+                <button id="customer-service-btn" type="button" onclick="showMessage('history-message', '📞 ለደንበኛ አገልግሎት፣ እባክዎ በቴሌግራም ቻናላችን ይቀላቀሉን!', 'success')">📞 Customer Service (የደንበኛ አገልግሎት)</button>
+
+                <button id="transaction-history-btn" type="button">🧾 Transaction History (የዝውውር ታሪክ)</button>
+
+                <button id="change-password-btn" type="button">🔑 የይለፍ ቃል ቀይር (Change Password)</button>
+                
+                <button id="logout-btn-account" type="button">🚪 Logout (ውጣ)</button>
+            </div>
+            
+            <form id="change-password-form">
+                <h4 style="margin-top: 0;">የይለፍ ቃል መቀየር</h4>
+                <div class="input-group">
+                    <label for="old-password">የድሮ የይለፍ ቃል:</label>
+                    <input type="password" id="old-password" required>
+                </div>
+                <div class="input-group">
+                    <label for="new-password">አዲስ የይለፍ ቃል (ቢያንስ 6 ፊደል):</label>
+                    <input type="password" id="new-password" required minlength="6">
+                </div>
+                <div class="input-group">
+                    <label for="confirm-new-password">አዲስ የይለፍ ቃል ማረጋገጫ:</label>
+                    <input type="password" id="confirm-new-password" required minlength="6">
+                </div>
+                <button type="submit" class="submit-btn" style="margin-top: 5px; padding: 10px;">🔑 የይለፍ ቃል ይቀይሩ</button>
+            </form>
+            
+            <p class="message" id="history-message" style="margin-top: 20px; text-align: center;"></p>
+        </div>
+        
+        <div id="team-content" class="page-content other-page">
+            <h3>👥 My Team (የሪፈራል ገጽ)</h3>
+            
+            <div class="referral-box">
+                <h4>🎉 ጓደኛዎን ይጋብዙ እና ተጨማሪ ገቢ ያግኙ!</h4>
+                <p>የእርስዎን **Referral Code** ወይም **Login Link** ተጠቅመው ጓደኛዎን ያስመዝግቡ።</p>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong style="color: #555;">የእርስዎ Referral Code:</strong>
+                    <div class="referral-info">
+                        <span id="referral-code-display" class="referral-code-display">...</span>
+                        <button id="copy-code-btn" class="copy-btn">ቅዳ</button>
+                    </div>
+                </div>
+
+                <div>
+                    <strong style="color: #555;">የእርስዎ የመመዝገቢያ ሊንክ:</strong>
+                    <div class="referral-info">
+                        <span id="referral-link-display" class="referral-link-display">...</span>
+                        <button id="copy-link-btn" class="copy-btn">ቅዳ</button>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 20px; font-weight: bold;">ጠቅላላ ቡድን አባላት: <span id="team-size-display">0</span></p>
+            </div>
+            
+            <div class="commission-rules">
+                <h4>📜 የሪፈራል ኮሚሽን ህግ</h4>
+                <p>✅ **የመጀመሪያ ጋባዥ ቦነስ (Level 1 Bonus):** በሪፈራል ሊንክዎ የተመዘገበ ሰው በካፒታል ኢንቨስት ሲጀምር **80 ETB** ወዲያውኑ ወደ አካውንትዎ ገቢ ይደረጋል።</p>
+                <p>📈 **የዕለታዊ ትርፍ ኮሚሽን:** በርስዎ የተጋበዘው ሰው (Level 1) በየቀኑ ከሚያገኘው ትርፍ ላይ **20%** ይሰጥዎታል።</p>
+                <p style="margin-top: 10px; font-weight: bold; color: #1e5a2c;">ይህ ትርፍ የጓደኛዎን ትርፍ ሳይነካ በተናጠል ከኩባንያው የሚሰጥ ነው።</p>
+            </div>
+
+        </div>
+
+        <div class="bottom-navbar">
+            <button id="nav-home" class="nav-active">Home</button>
+            <button id="nav-investment">Investment</button>
+            <button id="nav-account">የኔ መለያ</button>
+            <button id="nav-team">My Team</button>
+        </div>
+
+    </div>
+    
+    <div id="admin-dashboard-area" class="admin-dashboard-page">
+        <div class="admin-header">
+            <h2>🔐 Admin Panel</h2>
+            <p>የተጠቃሚዎችን Deposit እና Withdraw ጥያቄዎች እዚህ ያረጋግጡ።</p>
+        </div>
+
+        <div class="admin-transaction-list">
+            <h3>📑 በመጠባበቅ ላይ ያሉ ጥያቄዎች (Pending Requests)</h3>
+            <p id="admin-message" style="color: #f44336; font-weight: bold;"></p>
+            <div id="pending-transactions-list">
+                <p style="text-align: center; color: #555;">ምንም በመጠባበቅ ላይ ያለ ጥያቄ የለም።</p>
+            </div>
+        </div>
+        
+        <button id="admin-logout-btn" class="admin-logout-btn">🚪 ከአድሚን ውጣ (Logout)</button>
+    </div>
+
+    <!-- Transaction History Modal (Hidden by default) -->
+    <div id="history-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="document.getElementById('history-modal').style.display='none';">&times;</span>
+            <h3 style="color: #1e5a2c; text-align: center;">የዝውውር ታሪክ (Transaction History)</h3>
+            <div id="transaction-history-list">
+                <p style="text-align: center; color: #555;">ምንም የዝውውር ታሪክ የለም።</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, updateDoc, onSnapshot, collection, query, where, getDocs, runTransaction, getDoc, collectionGroup, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase Initialization and Globals
+        setLogLevel('Debug');
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app, db, auth;
+        let userId = null;
+        let userRef = null;
+        let activeUserData = null;
+        let isAdmin = false;
+
+        // [ADMIN-FEATURE] የአድሚን መረጃ
+        const adminCredentials = {
+            identifier: 'admin',
+            password: 'admin123'
+        };
+        const ADMIN_ID = 'admin'; // A placeholder ID for admin login
+
+        // Utility Functions
+        const showMessage = (elementId, message, type) => {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.textContent = message;
+                el.className = `message ${type}`;
+            }
+            setTimeout(() => {
+                if (el) el.textContent = '';
+            }, 5000);
+        };
+
+        const generateReferralCode = (phone) => {
+            return 'AC-' + phone.slice(-4) + Math.random().toString(36).substring(2, 6).toUpperCase();
+        };
+
+        const formatCurrency = (amount) => {
+            if (typeof amount !== 'number') return 'ETB 0.00';
+            return `ETB ${amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+        };
+
+        const getTodayDateString = () => new Date().toISOString().slice(0, 10);
+        
+        // Firestore Paths
+        const getUserDocRef = (uid) => doc(db, `/artifacts/${appId}/users/${uid}/user_data/profile`);
+        const getTransactionsCollection = () => collection(db, `/artifacts/${appId}/public/data/transactions`);
+
+        // --- Core Firebase and Auth Setup ---
+        const initializeFirebase = async () => {
+            if (Object.keys(firebaseConfig).length === 0) {
+                console.error("Firebase config is missing.");
+                // Fallback to anonymous sign-in if config is missing but still needs an auth object for Firestore
+                app = initializeApp({ projectId: 'demo-project' }); 
+                db = getFirestore(app);
+                auth = getAuth(app);
+                await signInAnonymously(auth);
+                userId = auth.currentUser.uid;
+                checkAuthentication();
+                return;
+            }
+
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            try {
+                // Ensure persistence is set before sign-in
+                await setPersistence(auth, browserLocalPersistence);
+
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Firebase Sign-In failed:", error);
+                // Fallback to anonymous sign-in if custom token fails
+                await signInAnonymously(auth);
+            }
+            checkAuthentication();
+        };
+
+        const checkAuthentication = () => {
+             // onAuthStateChanged is the standard way to get user ID after sign-in
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    userId = user.uid;
+                    userRef = getUserDocRef(userId);
+                    // Check if the user is the hardcoded Admin
+                    if (localStorage.getItem('isAdminLoggedIn') === 'true' && localStorage.getItem('adminUid') === userId) {
+                         isAdmin = true;
+                         showAdminDashboard();
+                    } else {
+                         isAdmin = false;
+                         setupUserListener();
+                    }
+                } else {
+                    userId = null;
+                    activeUserData = null;
+                    showLoginRegister();
+                }
+            });
+        };
+        
+        // --- Data Listeners ---
+        const setupUserListener = () => {
+            if (!db || !userId || isAdmin) return;
+
+            // 1. Listen to the current user's data document
+            onSnapshot(userRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    activeUserData = docSnap.data();
+                    
+                    // --- Daily Profit Logic ---
+                    simulateDailyProfits(activeUserData);
+                    
+                    updateUserDashboardUI();
+                    showDashboard();
+                } else {
+                    // This happens right after registration, before data is fully written
+                    console.log("User data not found, waiting for registration to complete.");
+                }
+            }, (error) => {
+                console.error("Error setting up user listener:", error);
+                showMessage('history-message', 'Error connecting to database. Please refresh.', 'error');
+            });
+
+            // 2. Listen to the team size (for the 'My Team' page)
+            const teamQuery = query(collection(db, `/artifacts/${appId}/users`), where('referrerId', '==', userId));
+            onSnapshot(teamQuery, (snapshot) => {
+                const teamSize = snapshot.size;
+                document.getElementById('team-size-display').textContent = teamSize;
+            }, (error) => {
+                console.error("Error fetching team size:", error);
+            });
+        };
+        
+        // [ADMIN-FEATURE] Admin Listener
+        const setupAdminListener = () => {
+            if (!db || !isAdmin) return;
+            
+            const pendingQuery = query(getTransactionsCollection(), where('status', '==', 'Pending'));
+            
+            onSnapshot(pendingQuery, (snapshot) => {
+                const pendingTransactions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderAdminPendingList(pendingTransactions);
+            }, (error) => {
+                console.error("Error setting up admin listener:", error);
+                showMessage('admin-message', 'Error loading pending transactions.', 'error');
+            });
+        };
+
+        // --- UI Update Functions ---
+        const showLoginRegister = () => {
+            loginRegisterArea.style.display = 'flex';
+            dashboardArea.style.display = 'none';
+            adminDashboardArea.style.display = 'none';
+        };
+
+        const showDashboard = () => {
+            loginRegisterArea.style.display = 'none';
+            dashboardArea.style.display = 'block';
+            adminDashboardArea.style.display = 'none';
+        };
+
+        const showAdminDashboard = () => {
+            loginRegisterArea.style.display = 'none';
+            dashboardArea.style.display = 'none';
+            adminDashboardArea.style.display = 'block';
+            setupAdminListener();
+        };
+
+        const updateUserDashboardUI = () => {
+            if (!activeUserData) return;
+
+            // Home Page Stats
+            userNameDisplay.textContent = activeUserData.name;
+            currentBalanceDisplay.textContent = formatCurrency(activeUserData.balance).replace('ETB ', '');
+            totalInvestedDisplay.textContent = formatCurrency(activeUserData.totalInvested).replace('ETB ', '');
+            
+            // Withdraw Form Balance
+            document.getElementById('current-balance-withdraw').textContent = formatCurrency(activeUserData.balance).replace('ETB ', '');
+
+            // Investment Purchase Balance
+            document.getElementById('current-balance-purchase').textContent = formatCurrency(activeUserData.balance).replace('ETB ', '');
+
+
+            // Account Page
+            accountInfoDisplay.textContent = `ስልክ: ${activeUserData.identifier} | ሙሉ ስም: ${activeUserData.name} | UID: ${userId}`;
+            
+            // Team/Referral Page
+            document.getElementById('referral-code-display').textContent = activeUserData.referralCode;
+            document.getElementById('referral-link-display').textContent = `${window.location.origin}/register?ref=${activeUserData.referralCode}`;
+            
+            // Investment List
+            renderInvestmentList(activeUserData.investments);
+            
+            // Switch back to main home content view
+            document.getElementById('main-home-content-div').style.display = 'block';
+            document.getElementById('deposit-page-content-div').style.display = 'none';
+            document.getElementById('withdraw-page-content-div').style.display = 'none';
+        };
+
+        const renderInvestmentList = (investments) => {
+            const listEl = document.getElementById('investment-list-display');
+            if (investments.length === 0) {
+                listEl.innerHTML = '<p style="text-align: center; color: #555;">ገና ምንም ኢንቨስት አላደረጉም።</p>';
+                return;
+            }
+
+            listEl.innerHTML = investments.map(inv => {
+                const daysPassed = Math.ceil((new Date() - new Date(inv.startDate)) / (1000 * 60 * 60 * 24));
+                const daysRemaining = Math.max(0, inv.durationDays - daysPassed);
+                const statusText = daysRemaining === 0 ? '<span style="color: red;">[Completed]</span>' : `<span style="color: #1e5a2c;">[${daysRemaining} Days Left]</span>`;
+                
+                return `
+                    <div class="investment-item">
+                        <p><strong>${inv.planName} Plan</strong> (${inv.amount} ETB) - ${statusText}</p>
+                        <p style="font-size: 13px; color: #777;">
+                            Rate: ${inv.dailyRate}% Daily | Start: ${inv.startDate} | Total Days: ${inv.durationDays}
+                        </p>
+                    </div>
+                `;
+            }).join('');
+        };
+        
+        const renderAdminPendingList = (transactions) => {
+            const listEl = document.getElementById('pending-transactions-list');
+            if (transactions.length === 0) {
+                listEl.innerHTML = '<p style="text-align: center; color: #555;">ምንም በመጠባበቅ ላይ ያለ ጥያቄ የለም።</p>';
+                return;
+            }
+
+            listEl.innerHTML = transactions.map(tx => {
+                return `
+                    <div class="admin-transaction-item">
+                        <div class="admin-transaction-info">
+                            <p><strong>Type:</strong> <span style="color: ${tx.type === 'Deposit' ? '#4CAF50' : '#f44336'};">${tx.type}</span></p>
+                            <p><strong>User ID:</strong> <small>${tx.userId}</small></p>
+                            <p><strong>Amount:</strong> ${formatCurrency(tx.amount)}</p>
+                            ${tx.type === 'Deposit' ? `<p><strong>Tx ID:</strong> ${tx.transactionId}</p>` : ''}
+                            ${tx.type === 'Withdraw' ? `
+                                <p><strong>Account:</strong> ${tx.bankName} | ${tx.accountNumber}</p>
+                                <p><strong>Holder:</strong> ${tx.accountHolderName}</p>
+                            ` : ''}
+                            <p><strong>Date:</strong> ${new Date(tx.date).toLocaleString()}</p>
+                        </div>
+                        <div class="admin-actions">
+                            <button class="approve-btn" data-id="${tx.id}" data-type="${tx.type}" data-user-id="${tx.userId}" data-amount="${tx.amount}">✅ Approve</button>
+                            <button class="reject-btn" data-id="${tx.id}">❌ Reject</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        };
+        
+        // --- Core Business Logic ---
+        
+        const simulateDailyProfits = async (user) => {
+            if (!user.investments || user.investments.length === 0) {
+                return;
+            }
+            
+            const today = getTodayDateString();
+            const lastProfitDate = user.lastProfitDate || today;
+
+            // Only run the calculation once per day (in a real app, this would be a server-side cron job)
+            if (lastProfitDate < today) {
+                let totalProfit = 0;
+                let newInvestments = [...user.investments];
+                const profitDate = new Date(lastProfitDate);
+                profitDate.setDate(profitDate.getDate() + 1);
+                const nextProfitDate = profitDate.toISOString().slice(0, 10);
+
+                // Check if the investment is still active on the next profit date
+                newInvestments.forEach(inv => {
+                    const daysPassed = Math.ceil((new Date(nextProfitDate) - new Date(inv.startDate)) / (1000 * 60 * 60 * 24));
+                    if (daysPassed <= inv.durationDays) {
+                        const dailyProfit = inv.amount * (inv.dailyRate / 100);
+                        totalProfit += dailyProfit;
+                        
+                        // Add profit to transaction history
+                        user.transactions.push({
+                            id: `P${Date.now()}${Math.random().toString(36).slice(2, 9)}`,
+                            type: "Profit",
+                            amount: dailyProfit,
+                            date: nextProfitDate,
+                            status: "Completed",
+                            details: `${inv.planName} Daily Profit (${inv.dailyRate}%)`
+                        });
+                    }
+                });
+
+                if (totalProfit > 0) {
+                    // Referral Commission Logic (Simplified: Check for referrer)
+                    if (user.referrerId) {
+                        const commission = totalProfit * 0.20;
+                        await processReferralCommission(user.referrerId, commission);
+                        
+                        // Add commission to transaction history
+                        user.transactions.push({
+                            id: `C${Date.now()}${Math.random().toString(36).slice(2, 9)}`,
+                            type: "Commission",
+                            amount: commission,
+                            date: nextProfitDate,
+                            status: "Completed",
+                            details: `20% Commission from ${user.name}'s daily profit`
+                        });
+                    }
+
+                    // Update user's balance and last profit date atomically
+                    try {
+                        await runTransaction(db, async (transaction) => {
+                            const sfDoc = await transaction.get(userRef);
+                            if (!sfDoc.exists()) {
+                                throw "Document does not exist!";
+                            }
+
+                            const newBalance = (sfDoc.data().balance || 0) + totalProfit;
+                            transaction.update(userRef, { 
+                                balance: newBalance,
+                                lastProfitDate: nextProfitDate,
+                                investments: newInvestments, // Update to handle completed status
+                                transactions: user.transactions // Push new transactions
+                            });
+                        });
+                        console.log(`✅ Daily profit processed for ${user.name} for ${nextProfitDate}. Profit: ${formatCurrency(totalProfit)}`);
+                    } catch (e) {
+                        console.error("Transaction failed: ", e);
+                    }
+                }
+            }
+        };
+
+        const processReferralCommission = async (referrerUid, commissionAmount) => {
+            const referrerRef = getUserDocRef(referrerUid);
+
+            try {
+                await runTransaction(db, async (transaction) => {
+                    const referrerDoc = await transaction.get(referrerRef);
+                    if (!referrerDoc.exists()) {
+                        throw "Referrer document does not exist!";
+                    }
+
+                    const referrerData = referrerDoc.data();
+                    const newBalance = (referrerData.balance || 0) + commissionAmount;
+                    const newTransactions = referrerData.transactions || [];
+                    
+                    newTransactions.push({
+                        id: `RC${Date.now()}${Math.random().toString(36).slice(2, 9)}`,
+                        type: "Referral Commission",
+                        amount: commissionAmount,
+                        date: getTodayDateString(),
+                        status: "Completed",
+                        details: `Daily 20% commission from referral.`
+                    });
+
+                    transaction.update(referrerRef, { 
+                        balance: newBalance,
+                        transactions: newTransactions 
+                    });
+                });
+                console.log(`✅ Referral commission processed for ${referrerUid}. Amount: ${formatCurrency(commissionAmount)}`);
+            } catch (e) {
+                console.error("Referral Commission Transaction failed: ", e);
+            }
+        };
+
+        // --- Event Handlers ---
+
+        // 1. Tab switching
+        document.getElementById('login-tab').addEventListener('click', () => {
+            document.getElementById('login-tab').classList.add('active');
+            document.getElementById('register-tab').classList.remove('active');
+            document.getElementById('login-form').classList.add('active');
+            document.getElementById('register-form').classList.remove('active');
+            document.getElementById('login-message').textContent = '';
+            document.getElementById('register-message').textContent = '';
+        });
+
+        document.getElementById('register-tab').addEventListener('click', () => {
+            document.getElementById('register-tab').classList.add('active');
+            document.getElementById('login-tab').classList.remove('active');
+            document.getElementById('register-form').classList.add('active');
+            document.getElementById('login-form').classList.remove('active');
+            document.getElementById('login-message').textContent = '';
+            document.getElementById('register-message').textContent = '';
+        });
+        
+        document.getElementById('go-to-register').addEventListener('click', (e) => {
+             e.preventDefault();
+             document.getElementById('register-tab').click();
+        });
+
+        document.getElementById('go-to-login').addEventListener('click', (e) => {
+             e.preventDefault();
+             document.getElementById('login-tab').click();
+        });
+
+
+        // 2. Login
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const identifier = document.getElementById('login-identifier').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            
+            document.getElementById('login-message').textContent = '... Logging in ...';
+            
+            // ADMIN LOGIN CHECK
+            if (identifier === adminCredentials.identifier && password === adminCredentials.password) {
+                // In a real app, this would involve server-side authentication
+                // Here, we simulate by creating a temporary, anonymous user and setting a flag
+                try {
+                    await signOut(auth);
+                    await signInAnonymously(auth);
+                    localStorage.setItem('isAdminLoggedIn', 'true');
+                    localStorage.setItem('adminUid', auth.currentUser.uid); 
+                    checkAuthentication();
+                    showMessage('login-message', '✅ Admin Login Successful!', 'success');
+                } catch(err) {
+                     showMessage('login-message', 'Admin Login Failed. Check console.', 'error');
+                     console.error(err);
+                }
+                return;
+            }
+
+            // USER LOGIN CHECK
+            const userQuery = query(collectionGroup(db, 'user_data'), where('identifier', '==', identifier));
+            
+            try {
+                const snapshot = await getDocs(userQuery);
+                
+                if (snapshot.empty) {
+                    showMessage('login-message', '⚠️ መለያው አልተገኘም!', 'error');
+                    return;
+                }
+                
+                const userData = snapshot.docs[0].data();
+                const userUid = snapshot.docs[0].ref.parent.parent.id; // Extract UID from path
+
+                if (userData.password !== password) {
+                    showMessage('login-message', '⚠️ የተሳሳተ የይለፍ ቃል!', 'error');
+                    return;
+                }
+                
+                // Successful login - sign out previous user, sign in anonymously with new UID flag
+                await signOut(auth);
+                await signInAnonymously(auth);
+                
+                // Since we can't use email/password for Firebase Auth, we simulate the session by reloading data upon auth change
+                // We set a flag to identify the user after anonymous sign-in (simplification)
+                userRef = getUserDocRef(userUid);
+                const updateRef = doc(db, 'login_sim', userUid); // Simplified: A dummy collection to trigger auth change/data load
+                await setDoc(updateRef, { loginTime: new Date().toISOString() });
+                
+                localStorage.setItem('isAdminLoggedIn', 'false');
+                checkAuthentication(); // This will re-trigger the listener with the new user context
+
+            } catch (error) {
+                console.error("Login Error:", error);
+                showMessage('login-message', '❌ Login failed. An error occurred.', 'error');
+            }
+        });
+        
+        // 3. Register
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('register-name').value.trim();
+            const phone = document.getElementById('register-phone').value.trim();
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            const referralCodeInput = document.getElementById('register-referral').value.trim();
+            
+            document.getElementById('register-message').textContent = '... Registering ...';
+
+            if (password !== confirmPassword) {
+                showMessage('register-message', '⚠️ የይለፍ ቃሎቹ አይመሳሰሉም!', 'error');
+                return;
+            }
+            
+            // Check if phone number already exists
+            const existingQuery = query(collectionGroup(db, 'user_data'), where('identifier', '==', phone));
+            const existingSnapshot = await getDocs(existingQuery);
+            if (!existingSnapshot.empty) {
+                showMessage('register-message', '⚠️ ይሄ ስልክ ቁጥር አስቀድሞ ተመዝግቧል።', 'error');
+                return;
+            }
+
+            // Sign out current user to get a fresh UID for the new user profile
+            await signOut(auth);
+            await signInAnonymously(auth); // Use a fresh UID for the new profile document
+            const newUid = auth.currentUser.uid;
+            const newUserRef = getUserDocRef(newUid);
+            
+            let referrerId = null;
+            
+            // Check Referral Code and get referrer's UID
+            if (referralCodeInput) {
+                const referrerQuery = query(collectionGroup(db, 'user_data'), where('referralCode', '==', referralCodeInput));
+                const referrerSnapshot = await getDocs(referrerQuery);
+
+                if (!referrerSnapshot.empty) {
+                    referrerId = referrerSnapshot.docs[0].ref.parent.parent.id;
+                    console.log(`User referred by: ${referrerId}`);
+                }
+            }
+
+            const newUserData = {
+                name: name,
+                identifier: phone,
+                password: password, // In a real app, hash this!
+                balance: 50.00, // Registration bonus
+                totalInvested: 0.00,
+                referralCode: generateReferralCode(phone),
+                referrerId: referrerId,
+                transactions: [{ 
+                    id: 'tx000', 
+                    type: "Bonus", 
+                    amount: 50.00, 
+                    date: getTodayDateString(), 
+                    status: "Completed",
+                    details: "Registration Bonus"
+                }],
+                investments: [],
+                lastProfitDate: getTodayDateString()
+            };
+
+            try {
+                await setDoc(newUserRef, newUserData);
+                showMessage('register-message', '✅ ምዝገባ ተሳክቷል! አሁን Login ማድረግ ይችላሉ።', 'success');
+                
+                // Clear form and switch to login tab
+                e.target.reset();
+                document.getElementById('login-tab').click();
+
+            } catch (error) {
+                console.error("Registration Error:", error);
+                showMessage('register-message', '❌ ምዝገባ አልተሳካም። እባክዎ እንደገና ይሞክሩ።', 'error');
+            }
+        });
+
+        // 4. Logout (User/Admin)
+        const logoutHandler = async () => {
+             try {
+                await signOut(auth);
+                localStorage.removeItem('isAdminLoggedIn');
+                localStorage.removeItem('adminUid');
+                isAdmin = false;
+                activeUserData = null;
+                // Sign in anonymously to maintain an active Firebase session context
+                await signInAnonymously(auth); 
+                showLoginRegister();
+                showMessage('login-message', '🚪 በተሳካ ሁኔታ ወጥተዋል!', 'success');
+                // Clear inputs
+                document.getElementById('login-identifier').value = '';
+                document.getElementById('login-password').value = '';
+
+            } catch (error) {
+                console.error("Logout Error:", error);
+                // Even if signOut fails, force UI change
+                showLoginRegister();
+            }
+        };
+
+        document.getElementById('logout-btn-account').addEventListener('click', logoutHandler);
+        document.getElementById('admin-logout-btn').addEventListener('click', logoutHandler);
+
+
+        // 5. Navigation
+        const navigate = (pageId) => {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.bottom-navbar button').forEach(b => b.classList.remove('nav-active'));
+            document.getElementById(`nav-${pageId.split('-')[0]}`).classList.add('nav-active');
+            
+            showMessage('history-message', '', ''); // Clear messages on page switch
+        };
+        document.getElementById('nav-home').addEventListener('click', () => navigate('home-content'));
+        document.getElementById('nav-investment').addEventListener('click', () => {
+             navigate('investment-content');
+             // Ensure we are showing plans by default on navigation
+             document.getElementById('plan-grid-list').style.display = 'flex';
+             document.getElementById('purchase-form-box').style.display = 'none';
+        });
+        document.getElementById('nav-account').addEventListener('click', () => {
+             navigate('account-content');
+             document.getElementById('change-password-form').classList.remove('active');
+        });
+        document.getElementById('nav-team').addEventListener('click', () => navigate('team-content'));
+
+
+        // 6. Deposit/Withdraw UI Toggle
+        document.getElementById('deposit-btn').addEventListener('click', () => {
+            document.getElementById('main-home-content-div').style.display = 'none';
+            document.getElementById('deposit-page-content-div').style.display = 'block';
+            showMessage('deposit-form-message', '', '');
+        });
+        
+        document.getElementById('withdraw-btn').addEventListener('click', () => {
+            document.getElementById('main-home-content-div').style.display = 'none';
+            document.getElementById('withdraw-page-content-div').style.display = 'block';
+            document.getElementById('current-balance-withdraw').textContent = formatCurrency(activeUserData.balance).replace('ETB ', '');
+            showMessage('withdraw-form-message', '', '');
+        });
+
+        document.getElementById('back-to-home-from-deposit-btn').addEventListener('click', () => {
+            document.getElementById('main-home-content-div').style.display = 'block';
+            document.getElementById('deposit-page-content-div').style.display = 'none';
+        });
+
+        document.getElementById('back-to-home-from-withdraw-btn').addEventListener('click', () => {
+            document.getElementById('main-home-content-div').style.display = 'block';
+            document.getElementById('withdraw-page-content-div').style.display = 'none';
+        });
+        
+        // 7. Deposit Form Submission (creates a transaction for Admin review)
+        document.getElementById('deposit-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const amount = parseFloat(document.getElementById('deposit-amount').value);
+            const transactionId = document.getElementById('transaction-id').value.trim();
+
+            if (amount < 500) {
+                showMessage('deposit-form-message', '⚠️ ቢያንስ 500 ETB ማስገባት አለብዎ!', 'error');
+                return;
+            }
+
+            const newTransaction = {
+                type: 'Deposit',
+                userId: userId,
+                userName: activeUserData.name,
+                userPhone: activeUserData.identifier,
+                amount: amount,
+                transactionId: transactionId,
+                date: new Date().toISOString(),
+                status: 'Pending'
+            };
+
+            try {
+                const transactionsCol = getTransactionsCollection();
+                await setDoc(doc(transactionsCol), newTransaction);
+                showMessage('deposit-form-message', '✅ Deposit ጥያቄዎ በተሳካ ሁኔታ ገብቷል። እባክዎ የአድሚን ማረጋገጫ ይጠብቁ!', 'success');
+                e.target.reset();
+            } catch (error) {
+                console.error("Deposit Submission Error:", error);
+                showMessage('deposit-form-message', '❌ Deposit ጥያቄ ማስገባት አልተቻለም።', 'error');
+            }
+        });
+        
+        // 8. Withdraw Form Submission (creates a transaction for Admin review)
+        document.getElementById('withdraw-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            const bankName = document.getElementById('withdraw-bank-name').value;
+            const fullName = document.getElementById('withdraw-full-name').value.trim();
+            const accountNumber = document.getElementById('withdraw-account-number').value.trim();
+            
+            if (amount < 100) {
+                showMessage('withdraw-form-message', '⚠️ ቢያንስ 100 ETB ማውጣት አለብዎ።', 'error');
+                return;
+            }
+            if (amount > activeUserData.balance) {
+                showMessage('withdraw-form-message', '⚠️ በቂ ቀሪ ሂሳብ የለዎትም!', 'error');
+                return;
+            }
+            
+            const newTransaction = {
+                type: 'Withdraw',
+                userId: userId,
+                userName: activeUserData.name,
+                userPhone: activeUserData.identifier,
+                amount: amount,
+                bankName: bankName,
+                accountHolderName: fullName,
+                accountNumber: accountNumber,
+                date: new Date().toISOString(),
+                status: 'Pending'
+            };
+
+            try {
+                // Deduct balance immediately for "Pending" status (Admin will approve/reject)
+                 await updateDoc(userRef, {
+                    balance: activeUserData.balance - amount,
+                    transactions: [...activeUserData.transactions, { ...newTransaction, id: `W${Date.now()}` }]
+                 });
+                 
+                const transactionsCol = getTransactionsCollection();
+                await setDoc(doc(transactionsCol), newTransaction);
+                showMessage('withdraw-form-message', '✅ Withdraw ጥያቄዎ ገብቷል! እባክዎ ማረጋገጫ ይጠብቁ።', 'success');
+                e.target.reset();
+            } catch (error) {
+                console.error("Withdraw Submission Error:", error);
+                showMessage('withdraw-form-message', '❌ Withdraw ጥያቄ ማስገባት አልተቻለም።', 'error');
+                // Revert balance if transaction fails to submit (basic error handling)
+                await updateDoc(userRef, { balance: activeUserData.balance });
+            }
+        });
+
+
+        // 9. Investment Plan Selection
+        document.querySelectorAll('.plan-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const planName = button.getAttribute('data-plan');
+                const minAmount = button.getAttribute('data-min');
+                const maxAmount = button.getAttribute('data-max');
+                const dailyRate = button.getAttribute('data-rate');
+                const durationDays = button.getAttribute('data-days');
+
+                // Update purchase form details
+                document.getElementById('selected-plan-name').textContent = `${planName} Plan`;
+                document.getElementById('plan-info-display').innerHTML = `
+                    **${planName} Plan** | Rate: ${dailyRate}% Daily | Min: ${minAmount} ETB | Days: ${durationDays}
+                `;
+                document.getElementById('purchase-amount').min = minAmount;
+                document.getElementById('purchase-amount').value = minAmount; // Default to min amount
+                document.getElementById('purchase-form-box').setAttribute('data-min', minAmount);
+                document.getElementById('purchase-form-box').setAttribute('data-max', maxAmount);
+                document.getElementById('purchase-form-box').setAttribute('data-rate', dailyRate);
+                document.getElementById('purchase-form-box').setAttribute('data-days', durationDays);
+                document.getElementById('current-balance-purchase').textContent = formatCurrency(activeUserData.balance).replace('ETB ', '');
+
+
+                // Toggle visibility
+                document.getElementById('plan-grid-list').style.display = 'none';
+                document.getElementById('purchase-form-box').style.display = 'block';
+                showMessage('purchase-form-message', '', '');
+            });
+        });
+        
+        // 10. Back to Plans button
+        document.getElementById('back-to-plans-btn').addEventListener('click', () => {
+            document.getElementById('plan-grid-list').style.display = 'flex';
+            document.getElementById('purchase-form-box').style.display = 'none';
+        });
+
+        // 11. Investment Purchase Submission
+        document.getElementById('purchase-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formBox = document.getElementById('purchase-form-box');
+            const amount = parseFloat(document.getElementById('purchase-amount').value);
+            const minAmount = parseFloat(formBox.getAttribute('data-min'));
+            const maxAmount = parseFloat(formBox.getAttribute('data-max'));
+            const planName = document.getElementById('selected-plan-name').textContent.replace(' ግዢ', '');
+            const dailyRate = parseFloat(formBox.getAttribute('data-rate'));
+            const durationDays = parseInt(formBox.getAttribute('data-days'));
+
+
+            if (amount < minAmount || amount > maxAmount) {
+                showMessage('purchase-form-message', `⚠️ መጠኑ በ ${minAmount} እና ${maxAmount} ETB መካከል መሆን አለበት!`, 'error');
+                return;
+            }
+
+            if (amount > activeUserData.balance) {
+                showMessage('purchase-form-message', '⚠️ በቂ ቀሪ ሂሳብ የለዎትም! እባክዎ Deposit ያድርጉ።', 'error');
+                return;
+            }
+            
+            // Purchase transaction
+            try {
+                await runTransaction(db, async (transaction) => {
+                    const sfDoc = await transaction.get(userRef);
+                    if (!sfDoc.exists()) throw "User document does not exist!";
+                    
+                    const userData = sfDoc.data();
+                    const newBalance = userData.balance - amount;
+                    const newTotalInvested = userData.totalInvested + amount;
+                    const newInvestments = userData.investments || [];
+                    const newTransactions = userData.transactions || [];
+                    
+                    const newInvestment = {
+                        planName: planName,
+                        amount: amount,
+                        dailyRate: dailyRate,
+                        durationDays: durationDays,
+                        startDate: getTodayDateString()
+                    };
+                    
+                    newInvestments.push(newInvestment);
+                    
+                    newTransactions.push({
+                        id: `I${Date.now()}${Math.random().toString(36).slice(2, 9)}`,
+                        type: "Investment",
+                        amount: amount,
+                        date: getTodayDateString(),
+                        status: "Completed",
+                        details: `Purchased ${planName}`
+                    });
+                    
+                    // Initial Referral Bonus (80 ETB)
+                    if (userData.referrerId && userData.totalInvested === 0) {
+                        const referrerRef = getUserDocRef(userData.referrerId);
+                        const referrerDoc = await transaction.get(referrerRef);
+                        
+                        if (referrerDoc.exists()) {
+                            const referrerData = referrerDoc.data();
+                            const newReferrerBalance = (referrerData.balance || 0) + 80.00;
+                            const newReferrerTransactions = referrerData.transactions || [];
+                            
+                            newReferrerTransactions.push({
+                                id: `RB${Date.now()}${Math.random().toString(36).slice(2, 9)}`,
+                                type: "Referral Bonus",
+                                amount: 80.00,
+                                date: getTodayDateString(),
+                                status: "Completed",
+                                details: `Bonus for referring ${activeUserData.name}`
+                            });
+                            
+                            transaction.update(referrerRef, { 
+                                balance: newReferrerBalance,
+                                transactions: newReferrerTransactions
+                            });
+                        }
+                    }
+
+                    transaction.update(userRef, {
+                        balance: newBalance,
+                        totalInvested: newTotalInvested,
+                        investments: newInvestments,
+                        transactions: newTransactions
+                    });
+                });
+                
+                showMessage('purchase-form-message', `✅ ${planName} Plan ገዝተዋል!`, 'success');
+                // Hide form and show plans
+                document.getElementById('back-to-plans-btn').click();
+                
+            } catch (error) {
+                console.error("Investment Purchase Transaction Failed:", error);
+                showMessage('purchase-form-message', '❌ ኢንቨስትመንት መግዛት አልተቻለም።', 'error');
+            }
+        });
+        
+        
+        // 12. Transaction History Modal
+        document.getElementById('transaction-history-btn').addEventListener('click', () => {
+            const listEl = document.getElementById('transaction-history-list');
+            const userTransactions = activeUserData.transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (userTransactions.length === 0) {
+                listEl.innerHTML = '<p style="text-align: center; color: #555;">ምንም የዝውውር ታሪክ የለም።</p>';
+            } else {
+                listEl.innerHTML = userTransactions.map(tx => `
+                    <div class="transaction-item">
+                        <p><strong>Type:</strong> ${tx.type}</p>
+                        <p><strong>Amount:</strong> ${formatCurrency(tx.amount)}</p>
+                        <p><strong>Date:</strong> ${new Date(tx.date).toLocaleDateString()}</p>
+                        <p><strong>Status:</strong> <span class="status-${tx.status}">${tx.status}</span></p>
+                        ${tx.details ? `<p><strong>Details:</strong> ${tx.details}</p>` : ''}
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('history-modal').style.display = 'flex';
+        });
+
+
+        // 13. Password Change Form Toggle
+        document.getElementById('change-password-btn').addEventListener('click', () => {
+             const form = document.getElementById('change-password-form');
+             if (form.classList.contains('active')) {
+                 form.classList.remove('active');
+             } else {
+                 form.classList.add('active');
+                 showMessage('history-message', '🔑 የይለፍ ቃልዎን ለመቀየር ከታች ያለውን ፎርም ይጠቀሙ።', 'success');
+             }
+        });
+        
+        // 14. Password Change Submission
+        document.getElementById('change-password-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const oldPassword = document.getElementById('old-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmNewPassword = document.getElementById('confirm-new-password').value;
+
+            if (oldPassword !== activeUserData.password) {
+                showMessage('history-message', '⚠️ የድሮ የይለፍ ቃልዎ ትክክል አይደለም!', 'error');
+                return;
+            }
+            if (newPassword.length < 6) {
+                showMessage('history-message', '⚠️ አዲሱ የይለፍ ቃል ቢያንስ 6 ፊደል መሆን አለበት።', 'error');
+                return;
+            }
+            if (newPassword !== confirmNewPassword) {
+                showMessage('history-message', '⚠️ አዲሱ የይለፍ ቃል ማረጋገጫ አይመሳሰልም!', 'error');
+                return;
+            }
+            if (newPassword === oldPassword) {
+                 showMessage('history-message', '⚠️ አዲሱ የይለፍ ቃል ከድሮው የተለየ መሆን አለበት።', 'error');
+                return;
+            }
+
+            try {
+                // Update the password field in the user document
+                await updateDoc(userRef, { password: newPassword });
+                showMessage('history-message', '✅ የይለፍ ቃልዎ በተሳካ ሁኔታ ተቀይሯል።', 'success');
+                e.target.reset();
+                document.getElementById('change-password-form').classList.remove('active'); // Hide form
+
+            } catch (error) {
+                console.error("Password Change Error:", error);
+                showMessage('history-message', '❌ የይለፍ ቃል መቀየር አልተሳካም።', 'error');
+            }
+        });
+        
+        
+        // 15. Referral Code/Link Copy Handlers
+        document.getElementById('copy-code-btn').addEventListener('click', () => {
+            const code = document.getElementById('referral-code-display').textContent;
+            document.execCommand('copy', false, code); // Using execCommand for compatibility
+            showMessage('history-message', '✅ Referral Code ተቀድቷል!', 'success');
+        });
+
+        document.getElementById('copy-link-btn').addEventListener('click', () => {
+            const link = document.getElementById('referral-link-display').textContent;
+            document.execCommand('copy', false, link); // Using execCommand for compatibility
+            showMessage('history-message', '✅ Referral Link ተቀድቷል!', 'success');
+        });
+        
+        
+        // --- Admin Handlers ---
+        
+        // 16. Admin Action (Approve/Reject)
+        document.getElementById('pending-transactions-list').addEventListener('click', async (e) => {
+            const target = e.target;
+            if (!target.classList.contains('approve-btn') && !target.classList.contains('reject-btn')) return;
+
+            const txId = target.getAttribute('data-id');
+            const txRef = doc(getTransactionsCollection(), txId);
+            const action = target.classList.contains('approve-btn') ? 'Approve' : 'Reject';
+
+            try {
+                if (action === 'Approve') {
+                    const txType = target.getAttribute('data-type');
+                    const userIdToUpdate = target.getAttribute('data-user-id');
+                    const amount = parseFloat(target.getAttribute('data-amount'));
+                    const userRefToUpdate = getUserDocRef(userIdToUpdate);
+
+                    await runTransaction(db, async (transaction) => {
+                        const txDoc = await transaction.get(txRef);
+                        if (!txDoc.exists()) throw "Transaction document does not exist!";
+                        
+                        const userDoc = await transaction.get(userRefToUpdate);
+                        if (!userDoc.exists()) throw "User document does not exist!";
+                        
+                        const userData = userDoc.data();
+                        let newBalance = userData.balance;
+                        const userTransactions = userData.transactions || [];
+                        
+                        // Update transaction status
+                        transaction.update(txRef, { status: 'Completed', processedBy: ADMIN_ID, processedDate: new Date().toISOString() });
+                        
+                        const newTx = {
+                            id: txId, 
+                            type: txType, 
+                            amount: amount, 
+                            date: new Date().toISOString(), 
+                            status: "Completed",
+                            details: txDoc.data().transactionId || txDoc.data().bankName 
+                        };
+
+
+                        if (txType === 'Deposit') {
+                            newBalance += amount;
+                            // Add transaction to user's history
+                            userTransactions.push(newTx);
+                        } else if (txType === 'Withdraw') {
+                            // Balance was already deducted upon request; no change needed here.
+                            // If user is trying to cheat, the earlier balance check would have failed.
+                            // However, we must ensure the transaction is marked as completed in user history.
+                            
+                            // Find the pending withdraw transaction in user history and update its status to 'Completed'
+                            const updatedTransactions = userTransactions.map(tx => {
+                                // Simple way to match a transaction; ideally use a proper ID
+                                if (tx.id.startsWith('W') && tx.status === 'Pending' && tx.amount === amount) {
+                                    return { ...tx, status: 'Completed' };
+                                }
+                                return tx;
+                            });
+                            
+                            transaction.update(userRefToUpdate, { balance: newBalance, transactions: updatedTransactions });
+                            return; // Exit here to prevent double update
+                        }
+                        
+                        // Update user document for Deposit
+                        transaction.update(userRefToUpdate, { balance: newBalance, transactions: userTransactions });
+                    });
+                    
+                    showMessage('admin-message', `✅ ${txType} #${txId} Approved!`, 'success');
+
+                } else { // Reject
+                    const txDoc = await getDoc(txRef);
+                    const txData = txDoc.data();
+                    
+                    await runTransaction(db, async (transaction) => {
+                        // Mark public transaction as Rejected
+                        transaction.update(txRef, { status: 'Rejected', processedBy: ADMIN_ID, processedDate: new Date().toISOString() });
+
+                        // For Withdrawals, need to refund the balance
+                        if (txData.type === 'Withdraw') {
+                            const userRefToUpdate = getUserDocRef(txData.userId);
+                            const userDoc = await transaction.get(userRefToUpdate);
+                            
+                            if (userDoc.exists()) {
+                                const userData = userDoc.data();
+                                const newBalance = userData.balance + txData.amount;
+                                const userTransactions = userData.transactions || [];
+                                
+                                // Find and update the withdraw transaction status to 'Rejected'
+                                const updatedTransactions = userTransactions.map(tx => {
+                                    if (tx.id.startsWith('W') && tx.status === 'Pending' && tx.amount === txData.amount) {
+                                        return { ...tx, status: 'Rejected' };
+                                    }
+                                    return tx;
+                                });
+                                
+                                transaction.update(userRefToUpdate, { balance: newBalance, transactions: updatedTransactions });
+                            }
+                        }
+                    });
+
+                    showMessage('admin-message', `❌ Transaction #${txId} Rejected!`, 'error');
+                }
+
+            } catch (error) {
+                console.error(`Admin Action Error (${action}):`, error);
+                showMessage('admin-message', `❌ Action failed: ${error.message || 'Check console'}`, 'error');
+            }
+        });
+
+
+        // --- Application Start ---
+        window.onload = initializeFirebase;
+    </script>
+
+</body>
+</html>

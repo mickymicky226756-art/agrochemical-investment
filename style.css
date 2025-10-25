@@ -1,0 +1,193 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    /* ለ dashboard.html ቀላል ጀርባ */
+    background-color: #f4f4f9; 
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+h1 {
+    color: #1e5a2c;
+    margin-bottom: 5px;
+}
+
+p {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Tab Buttons Style */
+.tab-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-buttons button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #eee;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+    flex-grow: 1;
+}
+
+.tab-buttons button.active {
+    background-color: #387c38;
+    color: white;
+    border-bottom: 3px solid #1e5a2c;
+}
+
+/* Form Box Style */
+.form-box {
+    display: none; 
+}
+
+.form-box.active {
+    display: block; 
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box; 
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #1e5a2c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #387c38;
+}
+
+.message {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.success {
+    color: #4CAF50; 
+}
+
+.error {
+    color: #f44336; 
+}
+
+/* ለ dashboard.html የተጨመሩ style */
+.dashboard-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+}
+.balance-card {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: left;
+    border-left: 5px solid #387c38;
+}
+.balance-card h2 {
+    color: #1e5a2c;
+    margin-top: 0;
+}
+.action-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+.action-buttons button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 45%;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+#deposit-btn {
+    background-color: #4CAF50; 
+    color: white;
+}
+#deposit-btn:hover {
+    background-color: #387c38;
+}
+#withdraw-btn {
+    background-color: #f44336; 
+    color: white;
+}
+#withdraw-btn:hover {
+    background-color: #d32f2f;
+}
+.investment-list {
+    text-align: left;
+}
+.investment-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.investment-item h4 {
+    margin: 0;
+    color: #1e5a2c;
+}
+.daily-profit {
+    color: green;
+    font-weight: bold;
+}
