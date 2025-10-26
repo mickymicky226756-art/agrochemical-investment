@@ -448,6 +448,41 @@
         }
     </style>
 
+        <!-- Firebase (compat CDN) -->
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+        <script>
+                // Firebase configuration (from user-provided config)
+                const firebaseConfig = {
+                    apiKey: "AIzaSyCa9NqS9LdL0FvdYoCWuSbCzvrmgPJ_fHs",
+                    authDomain: "agrochem-investment.firebaseapp.com",
+                    projectId: "agrochem-investment",
+                    storageBucket: "agrochem-investment.firebasestorage.app",
+                    messagingSenderId: "936499881703",
+                    appId: "1:936499881703:web:de12906c7a29ed5f962442",
+                    measurementId: "G-LNT6Q7LWKL"
+                };
+
+                // Initialize Firebase (compat)
+                try {
+                    firebase.initializeApp(firebaseConfig);
+                    // analytics may not be available in some environments
+                    try { firebase.analytics(); } catch (e) { /* ignore */ }
+
+                    // Expose Firestore DB globally so existing inline scripts can use it: window.db
+                    window.db = firebase.firestore();
+
+                    // Simple collection refs for convenience
+                    window.dbRef = {
+                        users: window.db.collection('users'),
+                        transactions: window.db.collection('transactions')
+                    };
+                } catch (err) {
+                    console.error('Firebase init error:', err);
+                }
+        </script>
+
 </head>
 <body>
 
